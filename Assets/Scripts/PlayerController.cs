@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private float lastDash = -1;
 
     private int amountOfJumpsLeft;
-    private int facingDirection = 1;
+    private int facingDirection = 1; // right
     private int lastWallJumpDirection;
 
     private bool isFacingRight = true;
@@ -402,6 +402,10 @@ public class PlayerController : MonoBehaviour
         {
             isWalking = false;
         }
+    }
+    public int GetFacingDirection()
+    {
+        return facingDirection;
     }
     private void Flip()
     {
