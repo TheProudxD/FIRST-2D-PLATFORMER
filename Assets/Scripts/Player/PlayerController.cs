@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     private float dashTimeLeft;
     private float lastImageXpos;
     private float lastDash = -1;
+    private float knockbackStartTime;
+    [SerializeField] private float knockbackDuration;
 
     private int amountOfJumpsLeft;
     private int facingDirection = 1; // right
@@ -30,7 +32,9 @@ public class PlayerController : MonoBehaviour
     private bool canClimbLedge = false;
     private bool hasWallJumped;
     private bool ledgeDetected;
+    private bool knockback;
 
+    [SerializeField] private Vector2 knockbackSpeed;
     private Animator anim;
     private Vector2 ledgePosBot;
     private Vector2 ledgePos1;
@@ -70,7 +74,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 wallJumpDirection;
 
     public LayerMask whatIsMask;
-    // Start is called before the first frame update
+
     private void Start()
     {
 
@@ -81,7 +85,7 @@ public class PlayerController : MonoBehaviour
         wallJumpDirection.Normalize();
     }
 
-    // Update is called once per frame
+
     private void Update()
     {
         CheckInput();
@@ -92,19 +96,34 @@ public class PlayerController : MonoBehaviour
         UpdateAnimations();
         CheckDash();
         CheckLedgeClimb();
+        CheckKnockback();
     }
     private void FixedUpdate()
     {
         ApplyMovement();
         CheckSurroundings();
     }
+    private void CheckKnockback()
+    {
+        if (Time.time >= knockbackStartTime + knockbackDuration && knockback)
+        {
+            knockback = false;
+            rb.velocity = new Vector2(0.0f, rb.velocity.y);
+        }
+    }
+    public void Knockback(int direction)
+    {
+        knockback = true;
+        knockbackStartTime = Time.time;
+        rb.velocity = new Vector2(knockbackSpeed.x * direction, knockbackSpeed.y);
+    }
     private void ApplyMovement()
     {
-        if (!isGrounded && !isWallSliding && movementInputDirection == 0)
+        if (!isGrounded && !isWallSliding && movementInputDirection == 0 && !knockback)
         {
             rb.velocity = new Vector2(rb.velocity.x * airDragMultiplier, rb.velocity.y);
         }
-        else if (canMove)
+        else if (canMove && !knockback)
         {
             rb.velocity = new Vector2(movementSpeed * movementInputDirection, rb.velocity.y);
         }
@@ -131,6 +150,10 @@ public class PlayerController : MonoBehaviour
         //        rb.velocity = new Vector2(movementSpeed * movementInputDirection, rb.velocity.y);
         //}
 
+    }
+    public bool GetDashStation()
+    {
+        return isDashing;
     }
     public void FinishLedgeClimb()
     {
@@ -307,7 +330,7 @@ public class PlayerController : MonoBehaviour
                 turnTimer = turnTimerSet;
             }
         }
-        if (turnTimer>=0)
+        if (turnTimer >= 0)
         {
             turnTimer -= Time.deltaTime;
             if (turnTimer <= 0)
@@ -318,8 +341,8 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButtonDown("Dash"))
         {
-            if(Time.time >= (lastDash + dashCoolDown))
-            AttemptToDash();
+            if (Time.time >= (lastDash + dashCoolDown))
+                AttemptToDash();
         }
     }
     private void CheckDash()
@@ -345,11 +368,12 @@ public class PlayerController : MonoBehaviour
                 isDashing = false;
                 canMove = true;
                 canFlip = true;
-            }if (Input.GetButtonDown("Dash"))
-        {
-            if(Time.time >= (lastDash + dashCoolDown))
-            AttemptToDash();
-        }
+            }
+            if (Input.GetButtonDown("Dash"))
+            {
+                if (Time.time >= (lastDash + dashCoolDown))
+                    AttemptToDash();
+            }
 
         }
     }
@@ -409,7 +433,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Flip()
     {
-        if (!isWallSliding && canFlip)
+        if (!isWallSliding && canFlip && !knockback)
         {
             facingDirection *= -1;
             isFacingRight = !isFacingRight;

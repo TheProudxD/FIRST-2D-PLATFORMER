@@ -6,14 +6,19 @@ public class PlayerCombatController : MonoBehaviour
     [SerializeField] private float inputTimer, attack1Radius, attack1Damage;
     [SerializeField] private Transform attack1HitBoxPos;
     [SerializeField] private LayerMask whatIsDamageable;
+
     private bool gotInput, isAttacking, isFirstAttack;
     private float lastInputTime = Mathf.NegativeInfinity;
     private float[] attackDetails = new float[2];
     private Animator anim;
+    private PlayerController PC;
+    private PlayerStats PS;
     void Start()
     {
         anim = GetComponent<Animator>();
         anim.SetBool("canAttack", combatEnabled);
+        PC = GetComponent<PlayerController>();
+        PS = GetComponent<PlayerStats>();
     }
 
 
@@ -62,6 +67,25 @@ public class PlayerCombatController : MonoBehaviour
         foreach (Collider2D collider in detectedObjects)
         {
             collider.transform.parent.SendMessage("Damage", attackDetails);
+        }
+    }
+    private void Damage(float[] attackDetails)
+    {
+        if (!PC.GetDashStation())
+        {
+            int direction;
+
+            PS.DecreaseHealth(attackDetails[0]);
+
+            if (attackDetails[1] < transform.position.x)
+            {
+                direction = 1;
+            }
+            else
+            {
+                direction = -1;
+            }
+            PC.Knockback(direction);
         }
     }
     private void FinishAttack1()

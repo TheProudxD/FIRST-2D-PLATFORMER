@@ -457,7 +457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b11eaf3891771a4999c108c530ae797, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 20
   knockbackSpeedX: 10
   knockbackSpeedY: 5
   knockbackDuration: 0.1
