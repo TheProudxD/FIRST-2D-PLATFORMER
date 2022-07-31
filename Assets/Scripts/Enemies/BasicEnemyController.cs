@@ -31,9 +31,11 @@ public class BasicEnemyController : MonoBehaviour
     private GameObject alive;
     private Rigidbody2D aliveRb;
     private Animator aliveAnim;
+    private GameManager gameManager;
 
     void Start()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         alive = transform.Find("Alive").gameObject;
         aliveRb = alive.GetComponent<Rigidbody2D>();
         aliveAnim = alive.GetComponent<Animator>();
@@ -107,6 +109,7 @@ public class BasicEnemyController : MonoBehaviour
     {
         Instantiate(deathChunkParticle, alive.transform.position, deathChunkParticle.transform.rotation);
         Instantiate(deathBloodParticle, alive.transform.position, deathBloodParticle.transform.rotation);
+        gameManager.scorePoint += 10;
         Destroy(gameObject);
     }
     private void UpdateDeadState()
@@ -202,7 +205,7 @@ public class BasicEnemyController : MonoBehaviour
         Vector2 botRight = new Vector2(touchDamageCheck.position.x + (touchDamageWidth / 2), touchDamageCheck.position.y - (touchDamageHeight / 2));
         Vector2 topLeft = new Vector2(touchDamageCheck.position.x - (touchDamageWidth / 2), touchDamageCheck.position.y + (touchDamageHeight / 2));
         Vector2 topRight = new Vector2(touchDamageCheck.position.x + (touchDamageWidth / 2), touchDamageCheck.position.y + (touchDamageHeight / 2));
-
+        
         Gizmos.DrawLine(botLeft, botRight);
         Gizmos.DrawLine(botRight, topRight);
         Gizmos.DrawLine(topRight, topLeft);

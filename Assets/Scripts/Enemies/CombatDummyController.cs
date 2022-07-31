@@ -16,12 +16,15 @@ public class CombatDummyController : MonoBehaviour
     private GameObject aliveGO, brokenTopGO, brokenBotGO;
     private Rigidbody2D rbAlive, rbBrokenTop, rbBrokenBot;
     private Animator aliveAnim;
+    private GameManager gameManager;
+    private ItemCollector itemCollector;
 
     void Start()
     {
         currentHealth = maxHealth;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
-
+        itemCollector = GameObject.Find("Player").GetComponent<ItemCollector>();
         aliveGO = transform.Find("Alive").gameObject;
         brokenTopGO = transform.Find("Broken Top").gameObject;
         brokenBotGO = transform.Find("Broken Bottom").gameObject;
@@ -30,7 +33,7 @@ public class CombatDummyController : MonoBehaviour
         rbAlive = aliveGO.GetComponent<Rigidbody2D>();
         rbBrokenTop = brokenTopGO.GetComponent<Rigidbody2D>();
         rbBrokenBot = brokenBotGO.GetComponent<Rigidbody2D>();
-
+        
         aliveGO.SetActive(true);
         brokenBotGO.SetActive(false);
         brokenBotGO.SetActive(false);
@@ -97,9 +100,10 @@ public class CombatDummyController : MonoBehaviour
         brokenBotGO.transform.position = aliveGO.transform.position;
         brokenTopGO.transform.position = aliveGO.transform.position;
 
-
         rbBrokenBot.velocity = new Vector2(knockbackSpeedX * playerFacingDirection, knockbacDeathSpeedY);
         rbBrokenTop.velocity = new Vector2(knockbackDeathSpeedX * playerFacingDirection, knockbacDeathSpeedY);
         rbBrokenTop.AddTorque(deathTorque * -playerFacingDirection, ForceMode2D.Impulse);
+
+        gameManager.scorePoint += 10;
     }
 }

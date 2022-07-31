@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7107155621984394040}
   - component: {fileID: 7107155621984394041}
   - component: {fileID: 7107155621984394047}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Broken Bottom
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 7107155622207228574}
   - component: {fileID: 7107155622207228575}
   - component: {fileID: 7107155622207228573}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Broken Top
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -420,7 +420,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7107155623319062487}
   - component: {fileID: 7107155623319062486}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Combat Dummy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -436,7 +436,7 @@ Transform:
   m_GameObject: {fileID: 7107155623319062480}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9116, y: 1.0433, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7107155622218085047}
@@ -465,4 +465,4 @@ MonoBehaviour:
   knockbacDeathSpeedY: 8
   deathTorque: 1
   applyKnockBack: 1
-  hitParticles: {fileID: 0}
+  hitParticles: {fileID: 4242984875116966632, guid: 645b245c4c54cca4897e7caebd55fa2a, type: 3}

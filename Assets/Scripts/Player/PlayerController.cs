@@ -10,7 +10,30 @@ public class PlayerController : MonoBehaviour
     private float lastImageXpos;
     private float lastDash = -1;
     private float knockbackStartTime;
-    [SerializeField] private float knockbackDuration;
+    private float beginUpSpeedTime;
+    private float knockbackDuration = 0.2f;
+    private float groundCheckRadius = 0.3f;
+    private float wallCheckDistance = 0.65f;
+    private float wallSlideSpeed = 1;
+    //private float movementForceInAir = 50;
+    private float variableJumpHightMultiplier = 0.5f;
+    private float airDragMultiplier = 0.95f;
+    private float wallHopForce = 10f;
+    private float wallJumpForce = 20f;
+    private float turnTimerSet = 0.1f;
+    private float jumpTimerSet = 0.15f;
+    private float movementSpeed = 10f;
+    private float jumpForce = 20.0f;
+    private float wallJumpTimerSet = 0.5f;
+    private float dashTime = 0.1f;
+    private float dashSpeed = 50f;
+    private float distanceBetweenImages = 0.1f;
+    private float dashCoolDown = 2.5f;
+    private float upSpeedDuration = 3;
+    private float ledgeClimbXOffset1 = 0.3f;
+    private float ledgeClimbYOffset1 = 0f;
+    private float ledgeClimbXOffset2 = 0.5f;
+    private float ledgeClimbYOffset2 = 2f;
 
     private int amountOfJumpsLeft;
     private int facingDirection = 1; // right
@@ -33,6 +56,7 @@ public class PlayerController : MonoBehaviour
     private bool hasWallJumped;
     private bool ledgeDetected;
     private bool knockback;
+    private bool timeIsUp;
 
     [SerializeField] private Vector2 knockbackSpeed;
     private Animator anim;
@@ -41,30 +65,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 ledgePos2;
     private Rigidbody2D rb;
 
-    public float groundCheckRadius;
-    public float wallCheckDistance;
-    public float wallSlideSpeed;
-    public float movementForceInAir;
-    public float variableJumpHightMultiplier = 0.5f;
-    public float airDragMultiplier = 0.95f;
-    public float wallHopForce;
-    public float wallJumpForce;
-    public float turnTimerSet = 0.15f;
-    public float jumpTimerSet = 0.1f;
-    public float movementSpeed = 10f;
-    public float jumpForce = 16.0f;
-    public float wallJumpTimerSet = 0.5f;
-    public float dashTime;
-    public float dashSpeed;
-    public float distanceBetweenImages;
-    public float dashCoolDown;
+    private int amountOfJumps = 1;
 
-    public float ledgeClimbXOffset1 = 0f;
-    public float ledgeClimbYOffset1 = 0f;
-    public float ledgeClimbXOffset2 = 0f;
-    public float ledgeClimbYOffset2 = 0f;
-
-    public int amountOfJumps;
+    [HideInInspector] public bool upSpeed;
 
     public Transform groundCheck;
     public Transform wallCheck;
@@ -77,7 +80,6 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         amountOfJumpsLeft = amountOfJumps;
@@ -97,11 +99,31 @@ public class PlayerController : MonoBehaviour
         CheckDash();
         CheckLedgeClimb();
         CheckKnockback();
+        UpSpeed();
     }
     private void FixedUpdate()
     {
         ApplyMovement();
         CheckSurroundings();
+    }
+    public void UpSpeed()
+    {
+        if (upSpeed )
+        {
+            movementSpeed *= 2;
+            dashSpeed *= 2;
+            wallSlideSpeed *= 2;
+            upSpeed = false;
+            timeIsUp = false;
+            beginUpSpeedTime = Time.time;
+        }
+        if (Time.time >= beginUpSpeedTime + upSpeedDuration && !timeIsUp)
+        {
+            movementSpeed /= 2;
+            dashSpeed /= 2;
+            wallSlideSpeed /= 2;
+            timeIsUp = true;
+        }
     }
     private void CheckKnockback()
     {

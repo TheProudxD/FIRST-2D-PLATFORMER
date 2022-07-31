@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Powerup
+  - Score
+  - Heal
+  - Speed
   layers:
   - Default
   - TransparentFX

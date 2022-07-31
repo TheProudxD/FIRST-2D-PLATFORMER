@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    [SerializeField]
-    private float maxHealth;
-    [SerializeField]
-    private GameObject deathChunkParticle, deathBloodParticle;
+   
+    [SerializeField] private GameObject deathChunkParticle, deathBloodParticle;
+
+    [HideInInspector] public float currentHealth;
+
     private GameManager gameManager;
-    private float currentHealth;
+
+    public float maxHealth;
     void Start()
     {
         currentHealth = maxHealth;
@@ -27,6 +29,7 @@ public class PlayerStats : MonoBehaviour
         Instantiate(deathChunkParticle, transform.position, deathChunkParticle.transform.rotation);
         Instantiate(deathBloodParticle, transform.position, deathBloodParticle.transform.rotation);
         gameManager.Respawn();
+        currentHealth = maxHealth;
         Destroy(gameObject);
     }
 }

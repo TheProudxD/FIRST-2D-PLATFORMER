@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 7853284638873617627}
   - component: {fileID: 7853284638873617626}
   - component: {fileID: 7853284638873617623}
+  - component: {fileID: 1624765397596275993}
   - component: {fileID: 7853284638873617621}
   - component: {fileID: 7853284638873617622}
   - component: {fileID: 7853284638873617620}
@@ -192,6 +193,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1624765397596275993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7853284638873617629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ef677eb2db720248a17e0c74d6981cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  counter: 0
+  score: {fileID: 0}
+  health: {fileID: 0}
 --- !u!114 &7853284638873617621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,9 +220,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 230044f21b177264a92a4b0845f91155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 60
   deathChunkParticle: {fileID: 2348540658686835253, guid: 1a396bdaaec13f74db0c3b9029bca362, type: 3}
   deathBloodParticle: {fileID: 2766405123537487144, guid: 3de8df51e70334646a440c97f452e756, type: 3}
+  currentHealth: 0
+  maxHealth: 50
 --- !u!114 &7853284638873617622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,11 +255,14 @@ MonoBehaviour:
   dashSpeed: 50
   distanceBetweenImages: 0.1
   dashCoolDown: 2.5
+  UpSpeedDuration: 5
   ledgeClimbXOffset1: 0.3
   ledgeClimbYOffset1: 0
   ledgeClimbXOffset2: 0.5
   ledgeClimbYOffset2: 2
   amountOfJumps: 1
+  health: 0
+  upSpeed: 0
   groundCheck: {fileID: 7853284639021755954}
   wallCheck: {fileID: 7853284638416577505}
   ledgeCheck: {fileID: 7853284639340902726}
