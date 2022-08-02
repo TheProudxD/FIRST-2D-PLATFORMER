@@ -5,7 +5,7 @@ public class PlayerStats : MonoBehaviour
    
     [SerializeField] private GameObject deathChunkParticle, deathBloodParticle;
 
-    [HideInInspector] public float currentHealth;
+    public float currentHealth;
 
     private GameManager gameManager;
 
@@ -15,10 +15,17 @@ public class PlayerStats : MonoBehaviour
         currentHealth = maxHealth;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
+    private void Update()
+    {
+        CheckDie();
+    }
 
     public void DecreaseHealth(float amount)
     {
         currentHealth -= amount;
+    }
+    private void CheckDie()
+    {
         if (currentHealth <= 0)
         {
             Die();

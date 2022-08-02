@@ -9,6 +9,7 @@ TagManager:
   - Score
   - Heal
   - Speed
+  - Trap
   layers:
   - Default
   - TransparentFX

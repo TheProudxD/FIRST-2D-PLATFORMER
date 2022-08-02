@@ -1,6 +1,7 @@
 using Cinemachine;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
         ps = GameObject.Find("Player").GetComponent<PlayerStats>();
         itemCollector = GameObject.Find("Player").GetComponent<ItemCollector>();
+
         CVC = GameObject.Find("Player Camera").GetComponent<CinemachineVirtualCamera>();
     }
 
@@ -48,9 +50,10 @@ public class GameManager : MonoBehaviour
     {
         if (Time.time >= respawnTimeStart + respawnTime && respawn)
         {
-            var playerTemp = Instantiate(player, respawnPoint);
-            CVC.m_Follow = playerTemp.transform;
+            //var playerTemp = Instantiate(player, respawnPoint);
+            //CVC.m_Follow = playerTemp.transform;
             respawn = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }
