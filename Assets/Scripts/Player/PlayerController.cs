@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     private int lastWallJumpDirection;
 
     private bool isFacingRight = true;
+    private bool timeIsUp = true;
     private bool isWalking;
     private bool isDashing;
     private bool isGrounded;
@@ -52,12 +53,11 @@ public class PlayerController : MonoBehaviour
     private bool checkJumpMultiplier;
     private bool canMove;
     private bool canFlip;
-    private bool canClimbLedge = false;
+    private bool canClimbLedge;
     private bool hasWallJumped;
     private bool ledgeDetected;
     private bool knockback;
-    private bool timeIsUp;
-
+    
     [SerializeField] private Vector2 knockbackSpeed;
     private Animator anim;
     private Vector2 ledgePosBot;
@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
 
     private int amountOfJumps = 1;
 
-    [HideInInspector] public bool upSpeed;
+    public bool upSpeed;
 
     public Transform groundCheck;
     public Transform wallCheck;
@@ -80,6 +80,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        movementSpeed = 10f;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         amountOfJumpsLeft = amountOfJumps;
@@ -108,21 +109,23 @@ public class PlayerController : MonoBehaviour
     }
     public void UpSpeed()
     {
-        if (upSpeed )
+        if (upSpeed)
         {
+            upSpeed = false;
+            timeIsUp = false;
+
             movementSpeed *= 2;
             dashSpeed *= 2;
             wallSlideSpeed *= 2;
-            upSpeed = false;
-            timeIsUp = false;
+            
             beginUpSpeedTime = Time.time;
         }
-        if (Time.time >= beginUpSpeedTime + upSpeedDuration && !timeIsUp)
+        if ((Time.time >= beginUpSpeedTime + upSpeedDuration) && !timeIsUp && !upSpeed)
         {
+            timeIsUp = true;
             movementSpeed /= 2;
             dashSpeed /= 2;
-            wallSlideSpeed /= 2;
-            timeIsUp = true;
+            wallSlideSpeed /= 2;  
         }
     }
     private void CheckKnockback()
