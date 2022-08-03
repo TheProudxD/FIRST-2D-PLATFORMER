@@ -78,6 +78,8 @@ public class PlayerController : MonoBehaviour
 
     public LayerMask whatIsMask;
 
+    [SerializeField] private AudioSource jumpSoundEffect;
+
     private void Start()
     {
         movementSpeed = 10f;
@@ -114,7 +116,7 @@ public class PlayerController : MonoBehaviour
             upSpeed = false;
             timeIsUp = false;
 
-            movementSpeed *= 2;
+            movementSpeed *= 1.5f;
             dashSpeed *= 2;
             wallSlideSpeed *= 2;
             
@@ -283,6 +285,7 @@ public class PlayerController : MonoBehaviour
             jumpTimer = 0;
             isAttemptingToJump = false;
             checkJumpMultiplier = true;
+            jumpSoundEffect.Play();
         }
     }
     private void WallHop()

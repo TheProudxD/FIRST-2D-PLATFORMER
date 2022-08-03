@@ -6,6 +6,9 @@ public class ItemCollector : MonoBehaviour
     private PlayerStats ps;
     private GameManager gameManager;
 
+    [SerializeField] private AudioSource collectSoundEffect;
+    [SerializeField] private AudioSource collectScoreSoundEffect;
+
     private void Start()
     {
         pc = GetComponent<PlayerController>();
@@ -19,17 +22,24 @@ public class ItemCollector : MonoBehaviour
         if (collision.gameObject.CompareTag("Heal"))
         {
             ps.currentHealth = ps.maxHealth;
+            PlaySound();
             Destroy(collision.gameObject);
         }
         else if (collision.gameObject.CompareTag("Score"))
         {
             gameManager.scorePoint++;
+            collectScoreSoundEffect.Play();
             Destroy(collision.gameObject);
         }
         else if (collision.gameObject.CompareTag("Speed"))
         {
             pc.upSpeed = true;
+            PlaySound();
             Destroy(collision.gameObject);
         }
+    }
+    private void PlaySound()
+    {
+        collectSoundEffect.Play();
     }
 }

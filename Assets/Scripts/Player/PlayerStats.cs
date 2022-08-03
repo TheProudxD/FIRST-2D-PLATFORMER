@@ -10,6 +10,7 @@ public class PlayerStats : MonoBehaviour
     private GameManager gameManager;
 
     public float maxHealth;
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -28,6 +29,7 @@ public class PlayerStats : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
+            gameManager.deathSoundEffect.Play();
             Die();
         }
     }

@@ -6,6 +6,9 @@ public class Trap : MonoBehaviour
 {
     [SerializeField] private float damage;
     private PlayerStats playerStats;
+
+    [SerializeField] private AudioSource damageSoundEffect;
+
     private void Start()
     {
         playerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
@@ -14,6 +17,7 @@ public class Trap : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player")){
             playerStats.currentHealth -= damage;
+            damageSoundEffect.Play();
         }
     }
 }

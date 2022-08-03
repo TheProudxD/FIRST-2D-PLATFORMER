@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     private CinemachineVirtualCamera CVC;
 
+    [SerializeField] private AudioSource startSoundEffect;
+    [SerializeField] public AudioSource deathSoundEffect;
     private void Start()
     {
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -44,6 +46,7 @@ public class GameManager : MonoBehaviour
     {
         respawnTimeStart = Time.time;
         respawn = true;
+        startSoundEffect.Play();
     }
 
     private void CheckRespawn()
