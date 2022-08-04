@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e336e6d29ff734a911f49a5fd36a83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 100
+  damage: 30
   damageSoundEffect: {fileID: 1777212414}
 --- !u!82 &1777212414
 AudioSource:

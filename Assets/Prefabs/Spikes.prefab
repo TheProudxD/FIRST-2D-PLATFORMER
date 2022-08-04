@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e336e6d29ff734a911f49a5fd36a83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
+  damage: 5
   damageSoundEffect: {fileID: 2726475472459568004}
 --- !u!61 &1411781158513379891
 BoxCollider2D:
